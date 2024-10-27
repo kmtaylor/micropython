@@ -133,6 +133,10 @@ MICROPY_FLOAT_IMPL = double
 endif
 endif
 
+ifeq ($(MCU_SERIES),f2)
+CFLAGS += -DMP_CONFIGFILE='"boards/NVUM/mpconfigport_f2.h"'
+endif
+
 # Configure floating point support
 ifeq ($(MICROPY_FLOAT_IMPL),double)
 CFLAGS += -DMICROPY_FLOAT_IMPL=MICROPY_FLOAT_IMPL_DOUBLE
@@ -225,12 +229,14 @@ LIBM_SRC_C += $(SRC_LIB_LIBM_SQRT_SW_C)
 endif
 endif
 
+ifneq ($(MCU_SERIES),f2)
 DRIVERS_SRC_C += $(addprefix drivers/,\
 	bus/softspi.c \
 	bus/softqspi.c \
 	memory/spiflash.c \
 	dht/dht.c \
 	)
+endif
 
 SRC_C += \
 	boardctrl.c \
@@ -313,6 +319,12 @@ SRC_O += \
 else ifeq ($(MCU_SERIES),l1)
 CFLAGS += -DUSE_HAL_DRIVER
 SRC_O += \
+	resethandler_m3.o \
+	shared/runtime/gchelper_thumb2.o
+else ifeq ($(MCU_SERIES),f2)
+CFLAGS += -DUSE_HAL_DRIVER
+SRC_O += \
+	system_stm32.o \
 	resethandler_m3.o \
 	shared/runtime/gchelper_thumb2.o
 else
