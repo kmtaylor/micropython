@@ -62,7 +62,7 @@
 #if defined(STM32F0)
 #define ADC_SAMPLETIME_DEFAULT      ADC_SAMPLETIME_13CYCLES_5
 #define ADC_SAMPLETIME_DEFAULT_INT  ADC_SAMPLETIME_239CYCLES_5
-#elif defined(STM32F4) || defined(STM32F7)
+#elif defined(STM32F4) || defined(STM32F7) || defined(STM32F2)
 #define ADC_SAMPLETIME_DEFAULT      ADC_SAMPLETIME_15CYCLES
 #define ADC_SAMPLETIME_DEFAULT_INT  ADC_SAMPLETIME_480CYCLES
 #elif defined(STM32G4)
@@ -316,7 +316,7 @@ void adc_config(ADC_TypeDef *adc, uint32_t bits) {
 static int adc_get_bits(ADC_TypeDef *adc) {
     #if defined(STM32F0) || defined(STM32G0) || defined(STM32L0) || defined(STM32WL)
     uint32_t res = (adc->CFGR1 & ADC_CFGR1_RES) >> ADC_CFGR1_RES_Pos;
-    #elif defined(STM32F4) || defined(STM32F7) || defined(STM32L1)
+    #elif defined(STM32F4) || defined(STM32F7) || defined(STM32L1) || defined(STM32F2)
     uint32_t res = (adc->CR1 & ADC_CR1_RES) >> ADC_CR1_RES_Pos;
     #elif defined(STM32G4) || defined(STM32H5) || defined(STM32H7) || defined(STM32L4) || defined(STM32WB)
     uint32_t res = (adc->CFGR & ADC_CFGR_RES) >> ADC_CFGR_RES_Pos;

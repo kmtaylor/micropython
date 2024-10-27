@@ -85,7 +85,7 @@
 #define ADC_CAL2                ((uint16_t *)0x1ffff7c2)
 #define ADC_CAL_BITS            (12)
 
-#elif defined(STM32F4)
+#elif defined(STM32F4) || defined(STM32F2)
 
 #define ADC_SCALE_V             (3.3f)
 #define ADC_CAL_ADDRESS         (0x1fff7a2a)
@@ -145,7 +145,7 @@
 
 #endif
 
-#if defined(STM32F091xC)
+#if defined(STM32F091xC) || defined(STM32F207xx)
 #define VBAT_DIV (2)
 #elif defined(STM32F405xx) || defined(STM32F415xx) || \
     defined(STM32F407xx) || defined(STM32F417xx) || \
@@ -249,7 +249,7 @@ static bool is_adcx_channel(int channel) {
     #if defined(STM32F411xE)
     // The HAL has an incorrect IS_ADC_CHANNEL macro for the F411 so we check for temp
     return IS_ADC_CHANNEL(channel) || channel == ADC_CHANNEL_TEMPSENSOR;
-    #elif defined(STM32F0) || defined(STM32F4) || defined(STM32F7)
+    #elif defined(STM32F0) || defined(STM32F4) || defined(STM32F7) || defined(STM32F2)
     return IS_ADC_CHANNEL(channel);
     #elif defined(STM32L1)
     // The HAL of STM32L1 defines some channels those may not be available on package
@@ -274,7 +274,7 @@ static bool is_adcx_channel(int channel) {
 
 static void adc_wait_for_eoc_or_timeout(ADC_HandleTypeDef *adcHandle, int32_t timeout) {
     uint32_t tickstart = HAL_GetTick();
-    #if defined(STM32F4) || defined(STM32F7) || defined(STM32L1)
+    #if defined(STM32F4) || defined(STM32F7) || defined(STM32L1) || defined(STM32F2)
     while ((adcHandle->Instance->SR & ADC_FLAG_EOC) != ADC_FLAG_EOC) {
     #elif defined(STM32F0) || defined(STM32G0) || defined(STM32G4) || defined(STM32H5) || defined(STM32H7) || defined(STM32L4) || defined(STM32WB)
     while (READ_BIT(adcHandle->Instance->ISR, ADC_FLAG_EOC) != ADC_FLAG_EOC) {
@@ -288,7 +288,7 @@ static void adc_wait_for_eoc_or_timeout(ADC_HandleTypeDef *adcHandle, int32_t ti
 }
 
 static void adcx_clock_enable(ADC_HandleTypeDef *adch) {
-    #if defined(STM32F0) || defined(STM32F4) || defined(STM32F7) || defined(STM32L1)
+    #if defined(STM32F0) || defined(STM32F4) || defined(STM32F7) || defined(STM32L1) || defined(STM32F2)
     ADCx_CLK_ENABLE();
     #elif defined(STM32H7A3xx) || defined(STM32H7A3xxQ) || defined(STM32H7B3xx) || defined(STM32H7B3xxQ)
     __HAL_RCC_ADC12_CLK_ENABLE();
@@ -337,7 +337,7 @@ static void adcx_init_periph(ADC_HandleTypeDef *adch, uint32_t resolution) {
     adch->Init.DataAlign = ADC_DATAALIGN_RIGHT;
     adch->Init.DMAContinuousRequests = DISABLE;
     adch->Init.SamplingTimeCommon = ADC_SAMPLETIME_55CYCLES_5;    // ~4uS
-    #elif defined(STM32F4) || defined(STM32F7)
+    #elif defined(STM32F4) || defined(STM32F7) || defined(STM32F2)
     adch->Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
     adch->Init.ScanConvMode = DISABLE;
     adch->Init.DataAlign = ADC_DATAALIGN_RIGHT;
@@ -412,7 +412,7 @@ static void adc_config_channel(ADC_HandleTypeDef *adc_handle, uint32_t channel) 
 
     #if defined(STM32F0)
     sConfig.SamplingTime = ADC_SAMPLETIME_55CYCLES_5;
-    #elif defined(STM32F4) || defined(STM32F7)
+    #elif defined(STM32F4) || defined(STM32F7) || defined(STM32F2)
     if (__HAL_ADC_IS_CHANNEL_INTERNAL(channel)) {
         sConfig.SamplingTime = ADC_SAMPLETIME_480CYCLES;
     } else {
@@ -665,7 +665,7 @@ static mp_obj_t adc_read_timed(mp_obj_t self_in, mp_obj_t buf_in, mp_obj_t freq_
             HAL_ADC_Start(&self->handle);
         } else {
             // for subsequent samples we can just set the "start sample" bit
-            #if defined(STM32F4) || defined(STM32F7) || defined(STM32L1)
+            #if defined(STM32F4) || defined(STM32F7) || defined(STM32L1) || defined(STM32F2)
             self->handle.Instance->CR2 |= (uint32_t)ADC_CR2_SWSTART;
             #elif defined(STM32F0) || defined(STM32G0) || defined(STM32G4) || defined(STM32H5) || defined(STM32H7) || defined(STM32L4) || defined(STM32WB)
             SET_BIT(self->handle.Instance->CR, ADC_CR_ADSTART);
@@ -775,7 +775,7 @@ static mp_obj_t adc_read_timed_multi(mp_obj_t adc_array_in, mp_obj_t buf_array_i
             adc_config_channel(&adc->handle, adc->channel);
             // for the first sample we need to turn the ADC on
             // ADC is started: set the "start sample" bit
-            #if defined(STM32F4) || defined(STM32F7) || defined(STM32L1)
+            #if defined(STM32F4) || defined(STM32F7) || defined(STM32L1) || defined(STM32F2)
             adc->handle.Instance->CR2 |= (uint32_t)ADC_CR2_SWSTART;
             #elif defined(STM32F0) || defined(STM32G0) || defined(STM32G4) || defined(STM32H5) || defined(STM32H7) || defined(STM32L4) || defined(STM32WB)
             SET_BIT(adc->handle.Instance->CR, ADC_CR_ADSTART);

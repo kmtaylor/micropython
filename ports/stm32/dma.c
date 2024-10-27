@@ -79,7 +79,7 @@ typedef union {
 } dma_idle_count_t;
 
 struct _dma_descr_t {
-    #if defined(STM32F4) || defined(STM32F7) || defined(STM32H7)
+    #if defined(STM32F4) || defined(STM32F7) || defined(STM32H7) || defined(STM32F2)
     DMA_Stream_TypeDef *instance;
     #elif defined(STM32F0) || defined(STM32G0) || defined(STM32G4) || defined(STM32H5) || defined(STM32L0) || defined(STM32L1) || defined(STM32L4) || defined(STM32WB) || defined(STM32WL)
     DMA_Channel_TypeDef *instance;
@@ -288,7 +288,7 @@ static const uint8_t dma_irqn[NSTREAM] = {
     0,
 };
 
-#elif defined(STM32F4) || defined(STM32F7)
+#elif defined(STM32F4) || defined(STM32F7) || defined(STM32F2)
 
 #define NCONTROLLERS            (2)
 #define NSTREAMS_PER_CONTROLLER (8)

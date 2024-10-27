@@ -79,7 +79,7 @@
 #include "boardctrl.h"
 #include "powerctrl.h"
 
-#if defined(STM32F4) || defined(STM32F7) || defined(STM32G4) || defined(STM32H7) || defined(STM32L4)
+#if defined(STM32F4) || defined(STM32F7) || defined(STM32G4) || defined(STM32H7) || defined(STM32L4) || defined(STM32F2)
 
 /**
   * @brief  System Clock Configuration
@@ -176,7 +176,7 @@ MP_WEAK void SystemClock_Config(void) {
     RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
     #endif
 
-    #if defined(STM32F4) || defined(STM32F7) || defined(STM32H7)
+    #if defined(STM32F4) || defined(STM32F7) || defined(STM32H7) || defined(STM32F2)
 
     #if defined(STM32H7) && defined(SMPS)
     // H7 MCUs with SMPS must provide a power supply configuration.
@@ -214,9 +214,11 @@ MP_WEAK void SystemClock_Config(void) {
         __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE0);
     } else
     #endif
+    #if !defined(STM32F2)
     {
         __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
     }
+    #endif
 
     #elif defined(STM32G4)
     // Configure the main internal regulator output voltage

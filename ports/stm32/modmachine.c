@@ -327,7 +327,7 @@ static mp_obj_t mp_machine_get_freq(void) {
 }
 
 static void mp_machine_set_freq(size_t n_args, const mp_obj_t *args) {
-    #if defined(STM32F0) || defined(STM32L0) || defined(STM32L1) || defined(STM32L4) || defined(STM32G0)
+    #if defined(STM32F0) || defined(STM32L0) || defined(STM32L1) || defined(STM32L4) || defined(STM32G0) || defined(STM32F2)
     mp_raise_NotImplementedError(MP_ERROR_TEXT("machine.freq set not supported yet"));
     #else
     mp_int_t sysclk = mp_obj_get_int(args[0]);

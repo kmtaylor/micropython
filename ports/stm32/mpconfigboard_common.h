@@ -419,6 +419,15 @@
 #define MICROPY_HW_MAX_UART (5)
 #define MICROPY_HW_MAX_LPUART (0)
 
+// Configuration for STM32F2 series
+#elif defined(STM32F2)
+#define MP_HAL_UNIQUE_ID_ADDRESS (UID_BASE)
+#define PYB_EXTI_NUM_VECTORS (23)
+#define MICROPY_HW_MAX_I2C (2)
+#define MICROPY_HW_MAX_TIMER (14)
+#define MICROPY_HW_MAX_UART (5)
+#define MICROPY_HW_MAX_LPUART (0)
+
 // Configuration for STM32L4 series
 #elif defined(STM32L4)
 

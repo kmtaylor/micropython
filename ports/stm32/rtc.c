@@ -610,6 +610,18 @@ mp_obj_t pyb_rtc_datetime(size_t n_args, const mp_obj_t *args) {
         RTC_TimeTypeDef time;
         HAL_RTC_GetTime(&RTCHandle, &time, RTC_FORMAT_BIN);
         HAL_RTC_GetDate(&RTCHandle, &date, RTC_FORMAT_BIN);
+        #if defined(STM32F2)
+        mp_obj_t tuple[7] = {
+            mp_obj_new_int(2000 + date.Year),
+            mp_obj_new_int(date.Month),
+            mp_obj_new_int(date.Date),
+            mp_obj_new_int(date.WeekDay),
+            mp_obj_new_int(time.Hours),
+            mp_obj_new_int(time.Minutes),
+            mp_obj_new_int(time.Seconds),
+            //mp_obj_new_int(rtc_subsec_to_us(time.SubSeconds)),
+        };
+        #else
         mp_obj_t tuple[8] = {
             mp_obj_new_int(2000 + date.Year),
             mp_obj_new_int(date.Month),
@@ -620,6 +632,7 @@ mp_obj_t pyb_rtc_datetime(size_t n_args, const mp_obj_t *args) {
             mp_obj_new_int(time.Seconds),
             mp_obj_new_int(rtc_subsec_to_us(time.SubSeconds)),
         };
+        #endif
         return mp_obj_new_tuple(8, tuple);
     } else {
         // set date and time
@@ -816,6 +829,7 @@ MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(pyb_rtc_wakeup_obj, 2, 4, pyb_rtc_wakeup);
 // calibration(cal)
 // When an integer argument is provided, check that it falls in the range [-511 to 512]
 // and set the calibration value; otherwise return calibration value
+#if !defined(STM32F2)
 mp_obj_t pyb_rtc_calibration(size_t n_args, const mp_obj_t *args) {
     rtc_init_finalise();
     mp_int_t cal;
@@ -861,13 +875,16 @@ mp_obj_t pyb_rtc_calibration(size_t n_args, const mp_obj_t *args) {
     }
 }
 MP_DEFINE_CONST_FUN_OBJ_VAR_BETWEEN(pyb_rtc_calibration_obj, 1, 2, pyb_rtc_calibration);
+#endif
 
 static const mp_rom_map_elem_t pyb_rtc_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_init), MP_ROM_PTR(&pyb_rtc_init_obj) },
     { MP_ROM_QSTR(MP_QSTR_info), MP_ROM_PTR(&pyb_rtc_info_obj) },
     { MP_ROM_QSTR(MP_QSTR_datetime), MP_ROM_PTR(&pyb_rtc_datetime_obj) },
     { MP_ROM_QSTR(MP_QSTR_wakeup), MP_ROM_PTR(&pyb_rtc_wakeup_obj) },
+#if !defined(STM32F2)
     { MP_ROM_QSTR(MP_QSTR_calibration), MP_ROM_PTR(&pyb_rtc_calibration_obj) },
+#endif
 };
 static MP_DEFINE_CONST_DICT(pyb_rtc_locals_dict, pyb_rtc_locals_dict_table);
 

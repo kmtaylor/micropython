@@ -36,7 +36,7 @@ typedef struct _dma_descr_t dma_descr_t;
 #define DMA_CIRCULAR 0x00000001
 #endif
 
-#if defined(STM32F0) || defined(STM32F4) || defined(STM32F7) || defined(STM32G0) || defined(STM32H5) || defined(STM32H7)
+#if defined(STM32F0) || defined(STM32F4) || defined(STM32F7) || defined(STM32G0) || defined(STM32H5) || defined(STM32H7) || defined(STM32F2)
 
 extern const dma_descr_t dma_I2C_1_RX;
 extern const dma_descr_t dma_SPI_3_RX;

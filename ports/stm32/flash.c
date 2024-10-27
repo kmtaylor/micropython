@@ -34,7 +34,7 @@
 
 #define FLASH_FLAG_ALL_ERRORS (FLASH_FLAG_EOP | FLASH_FLAG_WRPERR | FLASH_FLAG_PGERR)
 
-#elif defined(STM32F4)
+#elif defined(STM32F4) || defined(STM32F2)
 
 #define FLASH_FLAG_ALL_ERRORS (FLASH_FLAG_EOP | FLASH_FLAG_OPERR \
     | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR)
@@ -91,7 +91,7 @@ typedef struct {
 #define FLASH_LAYOUT_SECTOR_SIZE    (FLASH_PAGE_SIZE)
 #define FLASH_LAYOUT_NUM_SECTORS    ((FLASH_BANK1_END + 1 - FLASH_BASE) / FLASH_PAGE_SIZE)
 
-#elif defined(STM32F4)
+#elif defined(STM32F4) || defined(STM32F2)
 
 #define FLASH_LAYOUT_IS_HOMOGENEOUS (0)
 
@@ -330,7 +330,7 @@ int flash_erase(uint32_t flash_dest) {
     EraseInitStruct.TypeErase = FLASH_TYPEERASE_PAGES;
     EraseInitStruct.NbPages = num_sectors;
 
-    #elif defined(STM32F4) || defined(STM32F7) || defined(STM32H5) || defined(STM32H7)
+    #elif defined(STM32F4) || defined(STM32F7) || defined(STM32H5) || defined(STM32H7) || defined(STM32F2)
 
     EraseInitStruct.TypeErase = TYPEERASE_SECTORS;
     EraseInitStruct.NbSectors = num_sectors;
@@ -352,7 +352,7 @@ int flash_erase(uint32_t flash_dest) {
     EraseInitStruct.Banks = get_bank(flash_dest);
     #elif (defined(STM32L4) && !defined(SYSCFG_MEMRMP_FB_MODE)) || defined(STM32WB) || defined(STM32WL)
     EraseInitStruct.Page = get_page(flash_dest);
-    #elif defined(STM32F4) || defined(STM32F7)
+    #elif defined(STM32F4) || defined(STM32F7) || defined(STM32F2)
     EraseInitStruct.Sector = flash_get_sector_info(flash_dest, NULL, NULL);
     #elif defined(STM32H5) || defined(STM32H7)
     EraseInitStruct.Banks = get_bank(flash_dest);
