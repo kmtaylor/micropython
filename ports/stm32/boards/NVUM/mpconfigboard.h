@@ -28,14 +28,10 @@
 // clock source by removing the #define MICROPY_HW_CLK_USE_HSE line
 #define MICROPY_HW_CLK_USE_HSI (1)
 
-#if MICROPY_HW_CLK_USE_HSI
-#define MICROPY_HW_CLK_PLLM (16)
-#else
-#define MICROPY_HW_CLK_PLLM (8)
-#endif
-#define MICROPY_HW_CLK_PLLN (336)
-#define MICROPY_HW_CLK_PLLP (RCC_PLLP_DIV4)
-#define MICROPY_HW_CLK_PLLQ (7)
+#define MICROPY_HW_CLK_PLLM (13)
+#define MICROPY_HW_CLK_PLLN (195)
+#define MICROPY_HW_CLK_PLLP (RCC_PLLP_DIV2)
+#define MICROPY_HW_CLK_PLLQ (5)
 
 // USRSW is pulled low. Pressing the button makes the input go high.
 #define MICROPY_HW_USRSW_PIN        (pin_C13)
@@ -48,9 +44,12 @@
 #define MICROPY_HW_LED_ON(pin)      (mp_hal_pin_high(pin))
 #define MICROPY_HW_LED_OFF(pin)     (mp_hal_pin_low(pin))
 
-#define MICROPY_HW_FLASH_LATENCY FLASH_LATENCY_1
+#define MICROPY_HW_FLASH_LATENCY FLASH_LATENCY_3
 
 // USB config
 #if MICROPY_HW_ENABLE_USB
 #define MICROPY_HW_USB_FS (1)
 #endif
+
+#define MICROPY_BOARD_EARLY_INIT    nvum_early_init
+void nvum_early_init(void);

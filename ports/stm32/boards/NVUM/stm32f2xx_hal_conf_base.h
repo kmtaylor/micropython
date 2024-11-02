@@ -88,7 +88,6 @@
 #include "stm32f2xx_ll_pwr.h"
 #include "stm32f2xx_ll_rtc.h"
 #include "stm32f2xx_ll_usart.h"
-#include "stm32f2xx_ll_usb.h"
 
 // HAL parameter assertions are disabled
 #define assert_param(expr) ((void)0)

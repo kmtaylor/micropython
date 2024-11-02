@@ -146,7 +146,7 @@ void powerctrl_check_enter_bootloader(void) {
     if (BL_STATE_GET_KEY(bl_state) == BL_STATE_KEY && (RCC->RCC_SR & RCC_SR_SFTRSTF)) {
         // Reset by NVIC_SystemReset with bootloader data set -> branch to bootloader
         RCC->RCC_SR = RCC_SR_RMVF;
-        #if defined(STM32F0) || defined(STM32F4) || defined(STM32G0) || defined(STM32G4) || defined(STM32L0) || defined(STM32L1) || defined(STM32L4) || defined(STM32WB)
+        #if defined(STM32F0) || defined(STM32F4) || defined(STM32G0) || defined(STM32G4) || defined(STM32L0) || defined(STM32L1) || defined(STM32L4) || defined(STM32WB) || defined(STM32F2)
         __HAL_SYSCFG_REMAPMEMORY_SYSTEMFLASH();
         #endif
         branch_to_bootloader(BL_STATE_GET_REG(bl_state), BL_STATE_GET_ADDR(bl_state));

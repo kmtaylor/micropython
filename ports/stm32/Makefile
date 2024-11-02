@@ -322,7 +322,6 @@ SRC_O += \
 	resethandler_m3.o \
 	shared/runtime/gchelper_thumb2.o
 else ifeq ($(MCU_SERIES),f2)
-CFLAGS += -DUSE_HAL_DRIVER
 SRC_O += \
 	system_stm32.o \
 	resethandler_m3.o \

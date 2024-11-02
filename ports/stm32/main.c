@@ -330,7 +330,7 @@ void stm32_main(uint32_t reset_mode) {
 
     // Enable caches and prefetch buffers
 
-    #if defined(STM32F4)
+    #if defined(STM32F4) || defined(STM32F2)
 
     #if INSTRUCTION_CACHE_ENABLE
     __HAL_FLASH_INSTRUCTION_CACHE_ENABLE();

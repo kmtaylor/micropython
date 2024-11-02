@@ -184,7 +184,7 @@ MP_WEAK void SystemClock_Config(void) {
     #elif defined(STM32H7)
     // H7 MCUs without SMPS, lock the power supply configuration update.
     MODIFY_REG(PWR->CR3, PWR_CR3_SCUEN, 0);
-    #else
+    #elif !defined(STM32F2)
     // other MCUs, enable power control clock.
     __PWR_CLK_ENABLE();
     #endif
@@ -235,7 +235,7 @@ MP_WEAK void SystemClock_Config(void) {
     #endif
 
     /* Enable HSE Oscillator and activate PLL with HSE as source */
-    #if defined(STM32F4) || defined(STM32F7) || defined(STM32G4) || defined(STM32H7)
+    #if defined(STM32F4) || defined(STM32F7) || defined(STM32G4) || defined(STM32H7) || defined(STM32F2)
     RCC_OscInitStruct.OscillatorType = MICROPY_HW_RCC_OSCILLATOR_TYPE;
     RCC_OscInitStruct.HSEState = MICROPY_HW_RCC_HSE_STATE;
     RCC_OscInitStruct.HSIState = MICROPY_HW_RCC_HSI_STATE;
@@ -366,7 +366,7 @@ MP_WEAK void SystemClock_Config(void) {
     RCC_OscInitStruct.PLL.PLLFRACN = MICROPY_HW_CLK_PLLFRAC;
     #endif
 
-    #if defined(STM32F4) || defined(STM32F7)
+    #if defined(STM32F4) || defined(STM32F7) || defined(STM32F2)
     RCC_ClkInitStruct.AHBCLKDivider = MICROPY_HW_CLK_AHB_DIV;
     RCC_ClkInitStruct.APB1CLKDivider = MICROPY_HW_CLK_APB1_DIV;
     RCC_ClkInitStruct.APB2CLKDivider = MICROPY_HW_CLK_APB2_DIV;
