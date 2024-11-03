@@ -34,7 +34,7 @@
 
 #define FLASH_FLAG_ALL_ERRORS (FLASH_FLAG_EOP | FLASH_FLAG_WRPERR | FLASH_FLAG_PGERR)
 
-#elif defined(STM32F4) || defined(STM32F2)
+#elif defined(STM32F4)
 
 #define FLASH_FLAG_ALL_ERRORS (FLASH_FLAG_EOP | FLASH_FLAG_OPERR \
     | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR | FLASH_FLAG_PGPERR | FLASH_FLAG_PGSERR)
@@ -57,7 +57,7 @@
 
 #define FLASH_FLAG_ALL_ERRORS (FLASH_FLAG_ALL_ERRORS_BANK1 | FLASH_FLAG_ALL_ERRORS_BANK2)
 
-#elif defined(STM32L0) || defined(STM32L1)
+#elif defined(STM32L0) || defined(STM32L1) || defined(STM32F2)
 
 #define FLASH_FLAG_ALL_ERRORS (FLASH_FLAG_EOP | FLASH_FLAG_WRPERR | FLASH_FLAG_PGAERR)
 
@@ -91,7 +91,7 @@ typedef struct {
 #define FLASH_LAYOUT_SECTOR_SIZE    (FLASH_PAGE_SIZE)
 #define FLASH_LAYOUT_NUM_SECTORS    ((FLASH_BANK1_END + 1 - FLASH_BASE) / FLASH_PAGE_SIZE)
 
-#elif defined(STM32F4) || defined(STM32F2)
+#elif defined(STM32F4)
 
 #define FLASH_LAYOUT_IS_HOMOGENEOUS (0)
 
@@ -109,11 +109,11 @@ static const flash_layout_t flash_layout[] = {
     #endif
 };
 
-#elif defined(STM32F7)
+#elif defined(STM32F7) || defined(STM32F2)
 
 #define FLASH_LAYOUT_IS_HOMOGENEOUS (0)
 
-#if defined(STM32F722xx) || defined(STM32F723xx) || defined(STM32F732xx) || defined(STM32F733xx)
+#if defined(STM32F722xx) || defined(STM32F723xx) || defined(STM32F732xx) || defined(STM32F733xx) || defined(STM32F2)
 static const flash_layout_t flash_layout[] = {
     { 0x08000000, 0x04000, 4 },
     { 0x08010000, 0x10000, 1 },

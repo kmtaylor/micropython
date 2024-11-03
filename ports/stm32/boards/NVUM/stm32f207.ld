@@ -5,8 +5,10 @@
 /* Specify the memory areas */
 MEMORY
 {
-    FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 236K /* sectors 0-117 */
-    FLASH_FS (r)    : ORIGIN = 0x0803B000, LENGTH = 20K /* sectors 118-127 */
+    FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 256K
+    FLASH_START (rx): ORIGIN = 0x08000000, LENGTH = 16K     /* sector 0, 16K */
+    FLASH_FS (r)    : ORIGIN = 0x08004000, LENGTH = 16K     /* sector 1  16K */
+    FLASH_TEXT (rx) : ORIGIN = 0x08008000, LENGTH = 224K    /* sectors 2-5 2*16K + 64K + 128K = 224K */
     RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 128K
 }
 
@@ -22,7 +24,7 @@ _ram_start = ORIGIN(RAM);
 _ram_end = ORIGIN(RAM) + LENGTH(RAM);
 
 _micropy_hw_internal_flash_storage_ram_cache_end = _ram_end;
-_micropy_hw_internal_flash_storage_ram_cache_start = _micropy_hw_internal_flash_storage_ram_cache_end - 2K; /* fs cache = 2K */
+_micropy_hw_internal_flash_storage_ram_cache_start = _micropy_hw_internal_flash_storage_ram_cache_end - 16K; /* fs cache = 16K */
 
 _estack = _micropy_hw_internal_flash_storage_ram_cache_start - _estack_reserve;
 _sstack = _estack - 6K; /* tunable */
