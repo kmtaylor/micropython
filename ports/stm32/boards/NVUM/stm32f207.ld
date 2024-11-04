@@ -7,8 +7,8 @@ MEMORY
 {
     FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 256K
     FLASH_START (rx): ORIGIN = 0x08000000, LENGTH = 16K     /* sector 0, 16K */
-    FLASH_FS (r)    : ORIGIN = 0x08004000, LENGTH = 16K     /* sector 1  16K */
-    FLASH_TEXT (rx) : ORIGIN = 0x08008000, LENGTH = 224K    /* sectors 2-5 2*16K + 64K + 128K = 224K */
+    FLASH_FS (r)    : ORIGIN = 0x08004000, LENGTH = 32K     /* sectors 1-2  16K */
+    FLASH_TEXT (rx) : ORIGIN = 0x0800C000, LENGTH = 208K    /* sectors 3-5 16K + 64K + 128K = 224K */
     RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 128K
 }
 

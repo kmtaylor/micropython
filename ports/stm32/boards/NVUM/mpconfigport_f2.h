@@ -58,10 +58,10 @@
 // emitters
 #define MICROPY_PERSISTENT_CODE_LOAD (1)
 #ifndef MICROPY_EMIT_THUMB
-#define MICROPY_EMIT_THUMB          (1)
+#define MICROPY_EMIT_THUMB          (0)
 #endif
 #ifndef MICROPY_EMIT_INLINE_THUMB
-#define MICROPY_EMIT_INLINE_THUMB   (1)
+#define MICROPY_EMIT_INLINE_THUMB   (0)
 #endif
 
 // Python internal features
@@ -70,7 +70,7 @@
 #define MICROPY_ENABLE_GC           (1)
 #define MICROPY_ENABLE_EMERGENCY_EXCEPTION_BUF (1)
 #define MICROPY_EMERGENCY_EXCEPTION_BUF_SIZE (0)
-#define MICROPY_REPL_INFO           (1)
+#define MICROPY_REPL_INFO           (0)
 #define MICROPY_LONGINT_IMPL        (MICROPY_LONGINT_IMPL_MPZ)
 #ifndef MICROPY_FLOAT_IMPL // can be configured by each board via mpconfigboard.mk
 #define MICROPY_FLOAT_IMPL          (MICROPY_FLOAT_IMPL_FLOAT)
@@ -128,7 +128,7 @@
 #define MICROPY_PY_MACHINE_I2S_INCLUDEFILE "ports/stm32/machine_i2s.c"
 #define MICROPY_PY_MACHINE_I2S_CONSTANT_RX (I2S_MODE_MASTER_RX)
 #define MICROPY_PY_MACHINE_I2S_CONSTANT_TX (I2S_MODE_MASTER_TX)
-#define MICROPY_PY_MACHINE_I2S_RING_BUF (1)
+#define MICROPY_PY_MACHINE_I2S_RING_BUF (0)
 #define MICROPY_PY_MACHINE_SPI      (0)
 #define MICROPY_PY_MACHINE_SPI_MSB  (SPI_FIRSTBIT_MSB)
 #define MICROPY_PY_MACHINE_SPI_LSB  (SPI_FIRSTBIT_LSB)
@@ -147,13 +147,13 @@
 #define MICROPY_PY_WEBSOCKET        (MICROPY_PY_LWIP)
 #define MICROPY_PY_WEBREPL          (MICROPY_PY_LWIP)
 #ifndef MICROPY_PY_SOCKET
-#define MICROPY_PY_SOCKET           (1)
+#define MICROPY_PY_SOCKET           (0)
 #endif
 #ifndef MICROPY_PY_NETWORK
-#define MICROPY_PY_NETWORK          (1)
+#define MICROPY_PY_NETWORK          (0)
 #endif
 #ifndef MICROPY_PY_ONEWIRE
-#define MICROPY_PY_ONEWIRE          (1)
+#define MICROPY_PY_ONEWIRE          (0)
 #endif
 
 #define MICROPY_PY_DEFLATE          (0)
