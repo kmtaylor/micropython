@@ -165,13 +165,9 @@
 #define MICROPY_FATFS_RPATH            (2)
 #define MICROPY_FATFS_MULTI_PARTITION  (1)
 
-#if MICROPY_PY_PYB
 extern const struct _mp_obj_module_t pyb_module;
 #define PYB_BUILTIN_MODULE_CONSTANTS \
     { MP_ROM_QSTR(MP_QSTR_pyb), MP_ROM_PTR(&pyb_module) },
-#else
-#define PYB_BUILTIN_MODULE_CONSTANTS
-#endif
 
 #if MICROPY_PY_STM
 extern const struct _mp_obj_module_t stm_module;

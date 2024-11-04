@@ -29,13 +29,17 @@
 
 #include "py/runtime.h"
 #include "storage.h"
+#include "usb.h"
 
 static const mp_rom_map_elem_t pyb_module_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_pyb) },
 
-    #if MICROPY_HW_HAS_FLASH
     { MP_ROM_QSTR(MP_QSTR_Flash), MP_ROM_PTR(&pyb_flash_type) },
-    #endif
+
+    { MP_ROM_QSTR(MP_QSTR_usb_mode), MP_ROM_PTR(&pyb_usb_mode_obj) },
+    { MP_ROM_QSTR(MP_QSTR_USB_VCP), MP_ROM_PTR(&pyb_usb_vcp_type) },
+
+    { MP_ROM_QSTR(MP_QSTR_Pin), MP_ROM_PTR(&pin_type) },
 };
 
 static MP_DEFINE_CONST_DICT(pyb_module_globals, pyb_module_globals_table);
