@@ -34,17 +34,6 @@
 #define MICROPY_HW_CLK_PLLP (RCC_PLLP_DIV2)
 #define MICROPY_HW_CLK_PLLQ (5)
 
-// USRSW is pulled low. Pressing the button makes the input go high.
-#define MICROPY_HW_USRSW_PIN        (pin_C13)
-#define MICROPY_HW_USRSW_PULL       (GPIO_NOPULL)
-#define MICROPY_HW_USRSW_EXTI_MODE  (GPIO_MODE_IT_FALLING)
-#define MICROPY_HW_USRSW_PRESSED    (0)
-
-// LEDs
-#define MICROPY_HW_LED1             (pin_A5) // Green LD2 LED on Nucleo
-#define MICROPY_HW_LED_ON(pin)      (mp_hal_pin_high(pin))
-#define MICROPY_HW_LED_OFF(pin)     (mp_hal_pin_low(pin))
-
 #define MICROPY_HW_FLASH_LATENCY FLASH_LATENCY_3
 
 // USB config
